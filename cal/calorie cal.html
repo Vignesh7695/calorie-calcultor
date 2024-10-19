@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Calculators</title>
+    <style>
+
+body {
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Responsive container */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s;
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Title styling */
+.title {
+    text-align: center;
+}
+
+/* Input group styling */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Input and select elements */
+input, select {
+    width: 95%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+    background: #444;
+    box-shadow: 0 0 5px rgba(230, 105, 105, 0.8);
+}
+
+/* Buttons styling */
+.calculate-btn, .reset-btn {
+    width: 48%;
+    padding: 10px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s, background-color 0.3s;
+    margin-right: 4%;
+}
+
+.reset-btn {
+    background: #4CAF50;
+}
+
+.calculate-btn:hover, .reset-btn:hover {
+    transform: translateY(-2px);
+    background-color: #ff4c4c;
+}
+
+/* Result section styling */
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #444;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Keyframes for fadeIn animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header styling */
+header {
+    background: #fff;
+    color: #000;
+    padding: 50px 20px;
+    border-radius: 10px;
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Section styling */
+section {
+    margin: 50px auto;
+    padding: 0 20px;
+    max-width: 800px;
+    text-align: center;
+    color: #fff;
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0;
+}
+
+section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* Footer styles */
+footer {
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-social a {
+    font-size: 18px;
+}
+
+.results-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    color: #000;
+    text-align: center;
+    margin-top: 20px;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+.results-container h3 {
+    color: #d32f2f;
+}
+
+.macro-box:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    header, section {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        margin: 10px 0;
+    }
+
+    .calculate-btn, .reset-btn {
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .macros {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    section h2 {
+        font-size: 1.5rem;
+    }
+
+    .footer-logo a {
+        font-size: 18px;
+    }
+
+    .macro-box {
+        font-size: 1rem;
+    }
+}
+
+        *{
+        
+        }
+        body {
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6; /* Improved readability */
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s; /* Smooth scale effect on hover */
+}
+
+.container:hover {
+    transform: scale(1.02); /* Scale effect on hover */
+}
+
+.title {
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 95%; /* Full width */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    transition: background 0.3s, box-shadow 0.3s; /* Transition for background and shadow */
+}
+
+input:focus, select:focus {
+    background: #444;
+    box-shadow: 0 0 5px rgba(230, 105, 105, 0.8); /* Shadow on focus */
+}
+
+.calculate-btn, .reset-btn {
+    width: 48%;
+    padding: 10px;
+    background: #e63946;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s, background-color 0.3s; /* Smooth transitions */
+    margin-right: 4%;
+}
+
+.reset-btn {
+    background: #4CAF50; /* Green color for reset */
+}
+
+.calculate-btn:hover, .reset-btn:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    background-color: #ff4c4c; /* Slightly lighter color for feedback */
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #444;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header {
+    background: #fff;
+    color: #000;
+    padding: 50px 20px;
+    border-radius: 10px;
+    margin: 30px auto;
+    max-width: 800px;
+    text-align: center;
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0; /* Initial state */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); /* Add shadow to header */
+}
+
+header h1 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for depth */
+}
+
+header button {
+    background-color: #FF1414;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Transition for color and lift */
+}
+
+header button:hover {
+    background-color: #e00e0e;
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+section {
+    margin: 50px auto;
+    padding: 0 20px;
+    max-width: 800px;
+    text-align: center;
+    color: #fff;
+    animation: fadeIn 0.8s ease forwards;
+    opacity: 0; /* Initial state */
+}
+
+section h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+/* Footer Styles */
+footer {
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-logo a {
+    font-size: 24px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s; /* Transition for link color */
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-social a {
+    color: #fff;
+    margin: 0 10px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: transform 0.3s; /* Transition for social icons */
+}
+
+.footer-social a:hover {
+    color: #ddd;
+    transform: scale(1.1); /* Scale effect on hover */
+}
+
+.footer-bottom {
+    margin-top: 15px;
+}
+
+/* Results Section */
+.section {
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.results-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    color: #000;
+    text-align: center;
+    margin-top: 20px;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0; /* Initial state */
+}
+
+.results-container h3 {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.macros {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.macro-box {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #d32f2f;
+    color: #ffffff;
+    flex: 1;
+    margin: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: transform 0.3s; /* Add transition for macro boxes */
+}
+
+.macro-box:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+.macro-box span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#macroChart {
+    margin-top: 30px;
+    max-width: 100%;
+    height: 300px;
+}
+
+#weightChange {
+    color: #b71c1c;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Canvas styling for chart */
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+nav {
+
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between logo and links */
+
+    margin-right: 410px;
+    padding: 10px 30px; /* Padding for the navbar */
+    letter-spacing: 1px;
+}
+
+.logo {
+    display: flex; /* Align logo image and text in a row */
+    align-items: center; /* Center text vertically with the logo */
+}
+
+.logo-image {
+    height: 80px; /* Adjust height to fit your design */
+    width: 90px; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between image and text */
+}
+
+nav h5 {
+    color: #ffffff; /* White text color for the logo text */
+    margin: 0; /* Remove default margin */
+    font-size: 12px; /* Adjust font size as needed */
+}
+
+nav ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    display: flex; /* Display list items inline */
+}
+
+nav li {
+    margin: 0 15px; /* Margin between items */
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 50%);
+
+}
+
+nav a {
+    color: #ffffff; /* White text color for links */
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
+}
+
+nav a:hover {
+    color: #e63946; /* Change color on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.footer {
+    background-image: url('image/fitgg'), radial-gradient(ellipse at center, rgba(181, 8, 8, 0.38) 0%, rgba(0, 0, 0, 0.6) 100%);
+    color: #fff; /* White text color */
+    padding: 20px 0; /* Padding on top and bottom */
+    text-align: center; /* Centered text */
+    position: relative; /* Allow positioning if needed */
+    bottom: 0; /* Position at the bottom */
+    width: 100%; /* Full width */
+}
+
+.footer .container {
+    max-width: 1500px; /* Max width for the container */
+    margin: auto; /* Center the container */
+    padding: 0 20px; /* Padding on sides */
+}
+
+.footer ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove default padding */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+.footer li {
+    display: inline; /* Display list items inline */
+    margin: 0 15px; /* Margin between items */
+}
+
+.footer a {
+    color: #e63946; /* Bright color for links */
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s, transform 0.3s; /* Smooth transition for hover effect */
+}
+
+.footer a:hover {
+    color: #d62839; /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <a href="#home">
+                <img src="image/handfit1.png" alt="Logo" class="logo-image">
+                <h5>GYM360</h5>
+            </a>
+        </div>
+        <ul>
+            <li><a href="#calorie-calculator">Calorie Calculator</a></li>
+            <li><a href="#fat-calculator">Body Fat Calculator</a></li>
+            <li><a href="#food-selection">Food Selection</a></li>
+            <li><a href="#health-tips">Health Tips</a></li>
+        </ul>
+    </nav>
+    <center>
+    <div class="container">
+    <header>
+        <h1>Calorie Calculator</h1>
+
+        <p>Find out how many calories you need each day to achieve your goals!</p>
+    </header>
+    </div>
+       
+    <section>
+        <h2>Why Use a Calorie Calculator?</h2>
+        <p>
+            Whether your goal is to lose weight, build muscle, or maintain your current weight, knowing how many calories you consume each day is crucial.
+            Our calorie calculator helps you estimate your daily caloric needs based on your age, gender, weight, height, and activity level.
+        </p>
+        <p>
+            In addition, this calculator breaks down the amount of protein, carbs, and fats you should eat, based on your goals and body composition.
+        </p>
+    </section>
+    <div class="container section">
+        <h1 class="title">Calorie Calculator</h1>
+        <form id="calorie-calculator">
+            <div class="input-group">
+                <label for="calorie-weight">Weight (kg):</label>
+                <input type="number" id="calorie-weight" required>
+            </div>
+            <div class="input-group">
+                <label for="calorie-height">Height (cm):</label>
+                <input type="number" id="calorie-height" required>
+            </div>
+            <div class="input-group">
+                <label for="calorie-age">Age (years):</label>
+                <input type="number" id="calorie-age" required>
+            </div>
+            <div class="input-group">
+                <label for="calorie-activity">Activity Level:</label>
+                <select id="calorie-activity">
+                    <option value="1.2">Sedentary</option>
+                    <option value="1.375">Lightly active</option>
+                    <option value="1.55">Moderately active</option>
+                    <option value="1.725">Very active</option>
+                    <option value="1.9">Super active</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="goal">Goal:</label>
+                <select id="goal">
+                    <option value="maintenance">Maintenance</option>
+                    <option value="weight-loss">Weight Loss</option>
+                    <option value="muscle-gain">Muscle Gain</option>
+                </select>
+            </div>
+            <button type="submit" class="calculate-btn">Calculate Calories</button>
+            <button type="button" class="reset-btn" id="reset-calorie">Reset</button>
+        </form>
+        <div id="calorie-result" class="result hidden">
+    </div></div>
+
+        <div class="container section">
+<h2>Food Selection</h2>
+<div class="input-group">
+<label for="foodSearch">Add Food Item</label>
+<select id="foodSearch">
+    <option value="" disabled selected>Select food</option>
+</select>
+<label for="foodQuantity">Quantity (g):</label>
+<input type="number" id="foodQuantity" value="100" min="1" />
+<button id="addFoodBtn">Add Food</button>
+</div>
+<div id="foodList" class="food-list">
+<h3>Selected Foods:</h3>
+<ul id="selectedFoods"></ul>
+<div id="totalCalories" class="macro-box">Total Calories: --</div>
+<div id="totalProtein" class="macro-box">Total Protein: -- g</div>
+<div id="totalFat" class="macro-box">Total Fat: -- g</div>
+<div id="totalCarbs" class="macro-box">Total Carbs: -- g</div>
+</div>
+</div>
+
+<div class="container section" id="health-tips">
+    <h2>Health Tips</h2>
+    <ul>
+        <li>Stay hydrated by drinking plenty of water throughout the day.</li>
+        <li>Incorporate a variety of fruits and vegetables into your diet.</li>
+        <li>Exercise regularly to maintain a healthy weight and improve overall health.</li>
+        <li>Limit processed foods and added sugars in your diet.</li>
+        <li>Prioritize whole grains over refined grains.</li>
+    </ul>
+</div>
+
+<div class="container section" id="good-foods">
+    <h2>Good Foods for Your Diet</h2>
+    <ul>
+        <li><strong>Leafy Greens:</strong> Spinach, kale, and Swiss chard are low in calories but rich in nutrients.</li>
+        <li><strong>Lean Proteins:</strong> Chicken breast, turkey, and fish provide essential protein without excess fat.</li>
+        <li><strong>Whole Grains:</strong> Oats, quinoa, and brown rice are great sources of fiber and energy.</li>
+        <li><strong>Nuts and Seeds:</strong> Almonds, walnuts, and chia seeds are packed with healthy fats and protein.</li>
+        <li><strong>Fruits:</strong> Berries, apples, and bananas are high in fiber and vitamins.</li>
+    </ul>
+</div></center>
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2024  GYM360. All Rights Reserved.</p>
+        <ul>
+            <li><a href="#calorie-calculator">Calorie Calculator</a></li>
+            <li><a href="#fat-calculator">Body Fat Calculator</a></li>
+            <li><a href="#food-selection">Food Selection</a></li>
+            <li><a href="#health-tips">Health Tips</a></li>
+            <li><a href="#good-foods">Foods</a></li>
+        </ul>
+        <p>Follow us on:
+            <a href="#" target="_blank">Facebook</a> |
+            <a href="#" target="_blank">Twitter</a> |
+            <a href="#" target="_blank">Instagram</a>
+        </p>
+    </div>
+</footer>
+
+
+    <script>
+        // Calorie Calculator
+        document.getElementById('calorie-calculator').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const weight = parseFloat(document.getElementById('calorie-weight').value);
+            const height = parseFloat(document.getElementById('calorie-height').value);
+            const age = parseFloat(document.getElementById('calorie-age').value);
+            const activityLevel = parseFloat(document.getElementById('calorie-activity').value);
+            const goal = document.getElementById('goal').value;
+
+            // Calculate BMR using the Mifflin-St Jeor Equation
+            const bmr = 10 * weight + 6.25 * height - 5 * age + 5; // Assuming male
+            const calories = bmr * activityLevel;
+
+            // Adjust calories based on goal
+            let adjustedCalories;
+            if (goal === "weight-loss") {
+                adjustedCalories = calories - 500; // Subtracting 500 calories for weight loss
+            } else if (goal === "muscle-gain") {
+                adjustedCalories = calories + 500; // Adding 500 calories for muscle gain
+            } else {
+                adjustedCalories = calories; // Maintenance
+            }
+
+            // Calculate macronutrients
+            const protein = weight * 0.8; // Protein in grams
+            const fat = (adjustedCalories * 0.25) / 9; // Fats in grams (25% of calories)
+            const carbs = (adjustedCalories - (protein * 4 + fat * 9)) / 4; // Carbs in grams
+
+            // Display result
+            const calorieResultDiv = document.getElementById('calorie-result');
+            calorieResultDiv.textContent = `You need approximately ${Math.round(adjustedCalories)} calories per day, ${Math.round(protein)}g protein, ${Math.round(fat)}g fat, and ${Math.round(carbs)}g carbs.`;
+            calorieResultDiv.classList.remove('hidden');
+        });
+
+        // Reset calorie calculator
+        document.getElementById('reset-calorie').addEventListener('click', function() {
+            document.getElementById('calorie-calculator').reset();
+            document.getElementById('calorie-result').classList.add('hidden');
+        });
+
+
+    // Food database
+const foodDatabase = [
+    { name: "Chicken Breast (100g)", calories: 165, protein: 31, fat: 3.6, carbs: 0 },
+    { name: "Salmon (100g)", calories: 206, protein: 22, fat: 13, carbs: 0 },
+    { name: "Egg (1 large)", calories: 72, protein: 6, fat: 5, carbs: 0.6 },
+    { name: "Brown Rice (100g)", calories: 111, protein: 2.6, fat: 0.9, carbs: 23 },
+    { name: "Broccoli (100g)", calories: 34, protein: 2.8, fat: 0.4, carbs: 7 },
+    { name: "Banana (1 medium)", calories: 105, protein: 1.3, fat: 0.3, carbs: 27 },
+    { name: "Apple (1 medium)", calories: 95, protein: 0.5, fat: 0.3, carbs: 25 },
+    { name: "Peanut Butter (2 tbsp)", calories: 188, protein: 8, fat: 16, carbs: 6 },
+    { name: "Oatmeal (100g)", calories: 68, protein: 2.5, fat: 1.4, carbs: 12 },
+    { name: "Greek Yogurt (100g)", calories: 59, protein: 10, fat: 0.4, carbs: 3.6 },
+    { name: "Tofu (100g)", calories: 144, protein: 15, fat: 9, carbs: 3.9 },
+    { name: "Spinach (100g)", calories: 23, protein: 2.9, fat: 0.4, carbs: 3.6 },
+    { name: "Almonds (100g)", calories: 576, protein: 21, fat: 50, carbs: 22 },
+    { name: "Potato (100g)", calories: 77, protein: 2, fat: 0.1, carbs: 17 },
+    { name: "Sweet Potato (100g)", calories: 86, protein: 1.6, fat: 0.1, carbs: 20 },
+    { name: "Lentils (100g)", calories: 116, protein: 9, fat: 0.4, carbs: 20 },
+    { name: "Cottage Cheese (100g)", calories: 98, protein: 11, fat: 4, carbs: 3.4 },
+    { name: "Quinoa (100g)", calories: 120, protein: 4.1, fat: 1.9, carbs: 21 },
+    { name: "Bulgur (100g)", calories: 83, protein: 3.1, fat: 0.2, carbs: 18 },
+    { name: "Hummus (100g)", calories: 166, protein: 7.9, fat: 9.6, carbs: 14 },
+    { name: "Chickpeas (100g)", calories: 164, protein: 8.9, fat: 2.6, carbs: 27 },
+    { name: "Pasta (100g, cooked)", calories: 158, protein: 5.8, fat: 0.9, carbs: 31 },
+    { name: "Whole Wheat Bread (1 slice)", calories: 69, protein: 3.6, fat: 1.1, carbs: 11.5 },
+    { name: "Avocado (100g)", calories: 160, protein: 2, fat: 15, carbs: 9 },
+    { name: "Strawberries (100g)", calories: 32, protein: 0.7, fat: 0.3, carbs: 7.7 },
+    { name: "Blueberries (100g)", calories: 57, protein: 0.7, fat: 0.3, carbs: 14.5 },
+    { name: "Oranges (1 medium)", calories: 62, protein: 1.2, fat: 0.2, carbs: 15.4 },
+    { name: "Mango (1 medium)", calories: 150, protein: 1.4, fat: 0.6, carbs: 35 },
+    { name: "Kiwi (1 medium)", calories: 42, protein: 0.8, fat: 0.4, carbs: 10 },
+    { name: "Carrots (100g)", calories: 41, protein: 0.9, fat: 0.2, carbs: 10 },
+    { name: "Zucchini (100g)", calories: 17, protein: 1.2, fat: 0.3, carbs: 3.1 },
+    { name: "Celery (100g)", calories: 16, protein: 0.7, fat: 0.2, carbs: 3 },
+    { name: "Bell Pepper (100g)", calories: 20, protein: 1, fat: 0.2, carbs: 4.7 },
+    { name: "Cucumber (100g)", calories: 16, protein: 0.7, fat: 0.1, carbs: 3.6 },
+    { name: "Onion (100g)", calories: 40, protein: 1.1, fat: 0.1, carbs: 9 },
+    { name: "Garlic (100g)", calories: 149, protein: 6.4, fat: 0.5, carbs: 33 },
+    { name: "Green Beans (100g)", calories: 31, protein: 1.8, fat: 0.2, carbs: 7.1 },
+    { name: "Pumpkin (100g)", calories: 26, protein: 1, fat: 0.1, carbs: 6.5 },
+    { name: "Pineapple (100g)", calories: 50, protein: 0.5, fat: 0.1, carbs: 13 },
+    { name: "Mushrooms (100g)", calories: 22, protein: 3.1, fat: 0.3, carbs: 3.3 },
+    { name: "Cabbage (100g)", calories: 25, protein: 1.3, fat: 0.1, carbs: 5.8 },
+    { name: "Asparagus (100g)", calories: 20, protein: 2.2, fat: 0.2, carbs: 3.7 },
+    { name: "Soy Milk (100g)", calories: 33, protein: 3.3, fat: 1.8, carbs: 2.9 },
+    { name: "Rice Milk (100g)", calories: 47, protein: 0.5, fat: 1, carbs: 10 },
+    { name: "Flaxseed (100g)", calories: 534, protein: 18, fat: 42, carbs: 29 },
+    { name: "Chia Seeds (100g)", calories: 486, protein: 17, fat: 31, carbs: 42 },
+    { name: "Walnuts (100g)", calories: 654, protein: 15, fat: 65, carbs: 14 },
+    { name: "Sunflower Seeds (100g)", calories: 584, protein: 21, fat: 51, carbs: 20 },
+    { name: "Cashews (100g)", calories: 553, protein: 18, fat: 44, carbs: 30 },
+    { name: "Pistachios (100g)", calories: 562, protein: 20, fat: 45, carbs: 28 },
+];
+
+// Populate the dropdown menu
+const foodSelect = document.getElementById("foodSearch");
+foodDatabase.forEach((food) => {
+    const option = document.createElement("option");
+    option.value = food.name;
+    option.textContent = food.name;
+    foodSelect.appendChild(option);
+});
+
+// Function to calculate totals
+function calculateTotals(selectedFoods) {
+    let totalCalories = 0;
+    let totalProtein = 0;
+    let totalFat = 0;
+    let totalCarbs = 0;
+
+    selectedFoods.forEach((food) => {
+        const foodItem = foodDatabase.find(item => item.name === food.name);
+        if (foodItem) {
+            totalCalories += (foodItem.calories * food.quantity) / 100; // Adjusting for quantity
+            totalProtein += (foodItem.protein * food.quantity) / 100;
+            totalFat += (foodItem.fat * food.quantity) / 100;
+            totalCarbs += (foodItem.carbs * food.quantity) / 100;
+        }
+    });
+
+    // Update totals on the UI
+    document.getElementById("totalCalories").textContent = `Total Calories: ${totalCalories.toFixed(2)}`;
+    document.getElementById("totalProtein").textContent = `Total Protein: ${totalProtein.toFixed(2)} g`;
+    document.getElementById("totalFat").textContent = `Total Fat: ${totalFat.toFixed(2)} g`;
+    document.getElementById("totalCarbs").textContent = `Total Carbs: ${totalCarbs.toFixed(2)} g`;
+}
+
+// Selected foods array
+let selectedFoods = [];
+
+// Add food button click handler
+document.getElementById("addFoodBtn").addEventListener("click", () => {
+    const selectedFoodName = foodSelect.value;
+    const quantity = parseInt(document.getElementById("foodQuantity").value);
+
+    if (selectedFoodName && quantity > 0) {
+        const foodItem = foodDatabase.find(item => item.name === selectedFoodName);
+        if (foodItem) {
+            const existingFood = selectedFoods.find(item => item.name === foodItem.name);
+            if (existingFood) {
+                // If food already exists, update the quantity
+                existingFood.quantity += quantity;
+            } else {
+                // Add the new food item to the selected foods array
+                selectedFoods.push({ name: foodItem.name, quantity });
+            }
+
+            // Update the food list UI
+            updateFoodList();
+            calculateTotals(selectedFoods);
+        }
+    }
+});
+
+// Function to update the food list UI
+function updateFoodList() {
+    const selectedFoodsList = document.getElementById("selectedFoods");
+    selectedFoodsList.innerHTML = ""; // Clear existing list
+
+    selectedFoods.forEach((food, index) => {
+        const foodItem = document.createElement("li");
+        foodItem.textContent = `${food.name} (Quantity: ${food.quantity}g)`;
+
+        // Create a remove button
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove";
+        removeBtn.addEventListener("click", () => {
+            selectedFoods.splice(index, 1); // Remove the food from the array
+            updateFoodList(); // Update the displayed list
+            calculateTotals(selectedFoods); // Recalculate totals
+        });
+
+        foodItem.appendChild(removeBtn);
+        selectedFoodsList.appendChild(foodItem);
+    });
+}
+
+    </script>
+</body>
+</html>
